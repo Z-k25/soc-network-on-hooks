@@ -1,0 +1,8 @@
+header .navbar {
+    font-weight: bold;
+}
+
+header .navbar-brand span {
+    font-family: 'Nerko One', cursive;
+    font-size: 30px;
+}

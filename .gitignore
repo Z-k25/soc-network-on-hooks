@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# fonts-awesome
+
+/public/font-awesome-4.7.0/
