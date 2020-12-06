@@ -1,3 +1,7 @@
+body {
+    background-color: #f8f9fa;
+}
+
 header .navbar {
     font-weight: bold;
 }
@@ -5,4 +9,12 @@ header .navbar {
 header .navbar-brand span {
     font-family: 'Nerko One', cursive;
     font-size: 30px;
+}
+
+.container .routes {
+    background-color: white
+}
+
+nav .nav-item {
+    font-weight: bold;
 }

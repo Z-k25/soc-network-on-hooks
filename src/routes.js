@@ -1,15 +1,18 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import Users from './components/users'
+import Profile from './components/profile'
 
 const Routes = () => {
     return (
-        <Fragment>
+        <div className="col-md-10 routes" >
             <Switch>
-                <Route path="/profile/:id" component={<div>Profile</div>} />
-                <Route path="/users/" component={<div>Users</div>} />
+                <Route path="/" component={Profile} exact/>
+                <Route path="/profile/:id?" component={Profile} />
+                <Route path="/users/" component={Users} />
                 <Route path="/login" component={<div>login</div>} />
             </Switch>
-        </Fragment>
+        </div>
     )
 }
 
