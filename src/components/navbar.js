@@ -10,7 +10,7 @@ const Navbar = () => {
                         <NavLink
                             className="nav-link"
                             to="/">
-                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                            <i className="fa fa-user-circle" aria-hidden="true"></i>
                             &nbsp;
                             My profile
                         </NavLink>
@@ -19,7 +19,7 @@ const Navbar = () => {
                         <NavLink
                             className="nav-link"
                             to="/messages">
-                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                            <i className="fa fa-comments-o" aria-hidden="true"></i>
                             &nbsp;
                             Messages
                         </NavLink>
@@ -28,7 +28,7 @@ const Navbar = () => {
                         <NavLink
                             className="nav-link"
                             to="/users">
-                            <i class="fa fa-address-card" aria-hidden="true"></i>
+                            <i className="fa fa-address-card" aria-hidden="true"></i>
                             &nbsp;
                             Users
                         </NavLink>

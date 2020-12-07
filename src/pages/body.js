@@ -1,6 +1,6 @@
 import React from 'react'
 import Routes from '../routes'
-import Navbar from './navbar'
+import Navbar from '../components/navbar'
 
 const Body = () => {
     return (
