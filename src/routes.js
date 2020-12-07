@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Users from './pages/users'
 import Profile from './pages/profile'
 import SignForm from './components/sign-form'
+import {Loader} from './components/common/Loader/Loader'
+import { UserContext } from './context/userContext'
 
 const Routes = () => {
+    const [{isLoading}] = useContext(UserContext)
+
+    if (isLoading) {
+        return (
+            <div className="col-md-10 routes">
+                <Loader />
+            </div>
+        )
+    }
     return (
         <div className="col-md-10 routes" >
             <Switch>

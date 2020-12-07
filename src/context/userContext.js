@@ -4,11 +4,12 @@ import { useAuth } from '../hooks/useAuth'
 export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {
-    const [authData, isLoading, setAuthData] = useAuth()
+    const [authData, setAuthData] = useAuth()
     const [initAuth, setInitAuth] = useState(false)
-    
+
     useEffect(() => {
         setAuthData()
+        
         if (initAuth) {
             setInitAuth(false)
         }

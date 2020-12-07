@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { UserContext } from '../context/userContext'
 
 const Header = () => {
+    const [{ isLogedOn, login, isLoading }] = useContext(UserContext)
+    console.log(isLogedOn)
+
     return (
         <header>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -25,30 +29,39 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <NavLink 
-                                className="nav-link" 
-                                to="/login">
-                                    Sign in
+                        {!isLogedOn && !isLoading && (
+                            <Fragment>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link"
+                                        to="/login">
+                                        Sign in
                             </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink
-                                className="nav-link"
-                                to="/register">
-                                    Sign up
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink
+                                        className="nav-link"
+                                        to="/register">
+                                        Sign up
                                 </NavLink>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                username
-                            </a>
-                            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a className="dropdown-item" href="#">Account settings</a>
-                                <div className="dropdown-divider"></div>
-                                <Link className="dropdown-item" to="/logout">Log out</Link>
-                            </div>
-                        </li>
+                                </li>
+                            </Fragment>
+                        )}
+
+                        {isLogedOn && !isLoading && (
+                            <Fragment>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {login}
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a className="dropdown-item" href="#">Account settings</a>
+                                        <div className="dropdown-divider"></div>
+                                        <Link className="dropdown-item" to="/logout">Log out</Link>
+                                    </div>
+                                </li>
+                            </Fragment>
+                        )}
                     </ul>
                 </div>
             </nav>

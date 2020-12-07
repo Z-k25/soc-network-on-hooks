@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import '../components/styles/log-form.css'
 import { UserContext } from '../context/userContext'
 import { useFetch } from '../hooks/useFetch'
@@ -9,8 +10,8 @@ const SignForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
-    const [authData, setInitAuth] = useContext(UserContext)
-    console.log(authData)
+    const [{isLogedOn}, setInitAuth] = useContext(UserContext)
+
     useEffect(() => {
         if (resultCode === 0) {
             setInitAuth(true)
@@ -30,7 +31,9 @@ const SignForm = () => {
             }
         })
     }
-
+    if (isLogedOn) {
+        return <Redirect to="/profile" />
+    }
 
     return (
         <div className="container">
