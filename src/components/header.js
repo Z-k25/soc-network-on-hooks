@@ -1,10 +1,21 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { UserContext } from '../context/userContext'
+import { useFetch } from '../hooks/useFetch'
 
 const Header = () => {
-    const [{ isLogedOn, login, isLoading }] = useContext(UserContext)
-    console.log(isLogedOn)
+    const apiUrl = '/auth/login'
+    const [{ isLogedOn, login, isLoading }, setStartAuth, setClearAuthData] = useContext(UserContext)
+    const [, doFetch] = useFetch(apiUrl)
+    const [initLogaut, setInitLogaut] = useState(false)
+
+    useEffect(() => {
+        if (initLogaut) {
+            doFetch({ method: 'delete' })
+            setInitLogaut(false)
+            setClearAuthData(true)
+        }
+    }, [initLogaut, doFetch, setClearAuthData, setStartAuth])
 
     return (
         <header>
@@ -51,13 +62,15 @@ const Header = () => {
                         {isLogedOn && !isLoading && (
                             <Fragment>
                                 <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         {login}
-                                    </a>
+                                    </div>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item" href="#">Account settings</a>
+                                        <Link className="dropdown-item" to="/profile">Account settings</Link>
                                         <div className="dropdown-divider"></div>
-                                        <Link className="dropdown-item" to="/logout">Log out</Link>
+                                        <div
+                                            className="dropdown-item"
+                                            onClick={() => setInitLogaut(true)}>Log out</div>
                                     </div>
                                 </li>
                             </Fragment>

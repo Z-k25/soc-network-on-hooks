@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
     return (
-        <nav className="col-md-2">
+        <nav className="col-lg-2">
             <nav className="navbar bg-light">
                 <ul className="navbar-nav">
                     <li className="nav-item">

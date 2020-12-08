@@ -6,6 +6,14 @@ header .navbar {
     font-weight: bold;
 }
 
+header .nav-item.dropdown {
+    cursor: pointer;
+}
+
+header .dropdown-menu {
+    cursor: pointer;
+}
+
 header .navbar-brand span {
     font-family: 'Nerko One', cursive;
     font-size: 30px;
@@ -18,3 +26,4 @@ header .navbar-brand span {
 nav .nav-item {
     font-weight: bold;
 }
+

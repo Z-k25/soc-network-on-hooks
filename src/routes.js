@@ -11,13 +11,13 @@ const Routes = () => {
 
     if (isLoading) {
         return (
-            <div className="col-md-10 routes">
+            <div className="col-lg-10 routes">
                 <Loader />
             </div>
         )
     }
     return (
-        <div className="col-md-10 routes" >
+        <div className="col-lg-10 routes" >
             <Switch>
                 <Route path="/" component={Profile} exact />
                 <Route path="/profile/:id?" component={Profile} />

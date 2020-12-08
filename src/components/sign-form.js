@@ -10,15 +10,14 @@ const SignForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
-    const [{isLogedOn}, setInitAuth] = useContext(UserContext)
+    const [{ isLogedOn }, setStartAuth, setClearAuthData] = useContext(UserContext)
 
     useEffect(() => {
         if (resultCode === 0) {
-            setInitAuth(true)
-            console.log('init')
+            setStartAuth(true)
         }
 
-    }, [setInitAuth, resultCode])
+    }, [setStartAuth, setClearAuthData, resultCode])
 
     const onSubmit = (e) => {
         e.preventDefault()
