@@ -28,7 +28,6 @@ export const authDataReducer = (state, action) => {
             }
         }
         case 'clear': {
-            console.log(`Очистка!!`)
             return {
                 ...state,
                 id: null,

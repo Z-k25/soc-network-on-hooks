@@ -24,33 +24,30 @@ export const useFetch = (url) => {
     }, [url])
 
     useEffect(() => {
-        if (isLoading) {
-            Axios(options)
-                .then((res) => {
-                    if (res.data.resultCode === 1) {
-                        setError(res.data.messages)
-                    }
-                    else if (res.data.resultCode === 0) {
-                        setResponse(response => {
-                            return {...response,
-                                    ...res.data.data}
-                        })
-                    }
-                    setIsLoading(false)
-                    setResultCode(res.data.resultCode)
-                })
-
-                .catch((data) => {
-                    console.log(data)
-
-                    setIsLoading(false)
-                })
+        if (!isLoading) {
+            return
         }
 
+        Axios(options)
+            .then((res) => {
+                if (res.data.resultCode === 1) {
+                    setError(res.data.messages)
+                }
+                else if (res.data.resultCode === 0) {
+                    setResponse(res.data.data)
+                }
+                setIsLoading(false)
+                setResultCode(res.data.resultCode)
+            })
 
+            .catch((data) => {
+                console.log(data)
+
+                setIsLoading(false)
+            })
     }, [options, isLoading])
-    
-    return [{response, error, isLoading, resultCode}, doFetch]
+
+    return [{ response, error, isLoading, resultCode }, doFetch]
 
 }
 
