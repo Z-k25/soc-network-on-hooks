@@ -30,10 +30,13 @@ export const useFetch = (url) => {
 
         Axios(options)
             .then((res) => {
+                if (res.data.items) {
+                    setResponse(res.data)
+                }
                 if (res.data.resultCode === 1) {
                     setError(res.data.messages)
                 }
-                else if (res.data.resultCode === 0) {
+                if (res.data.resultCode === 0) {
                     setResponse(res.data.data)
                 }
                 setIsLoading(false)
