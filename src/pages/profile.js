@@ -1,16 +1,11 @@
-import React/* , { useEffect } */ from 'react'
-/* import { useFetch } from '../hooks/useFetch'
- */
-const Profile = () => {
-    /* const [{...data}, doFetch ] =useFetch('/auth/me')
-    console.log(data)
+import React from 'react'
+import withAuthRedirect from '../HOC/withAuthRedirect'
 
-    useEffect(() => {
-        doFetch()
-    }, [doFetch]) */
+const Profile = () => {
+    
     return (
         <div>Profile page</div>
     )
 }
 
-export default Profile
+export default withAuthRedirect(Profile)
