@@ -10,14 +10,14 @@ const SignForm = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
-    const [{ isLogedOn }, setStartAuth, setClearAuthData] = useContext(UserContext)
+    const [{ isLogedOn, id }, setStartAuth] = useContext(UserContext)
 
     useEffect(() => {
         if (resultCode === 0) {
             setStartAuth(true)
         }
 
-    }, [setStartAuth, setClearAuthData, resultCode])
+    }, [resultCode, setStartAuth])
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -31,7 +31,7 @@ const SignForm = () => {
         })
     }
     if (isLogedOn) {
-        return <Redirect to="/profile" />
+        return <Redirect to={`/profile/${id}`} />
     }
 
     return (
