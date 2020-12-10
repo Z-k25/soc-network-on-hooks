@@ -1,15 +1,22 @@
 import React, { useEffect } from 'react'
-import {useFetch} from '../hooks/useFetch'
+import { Loader } from '../components/common/Loader/Loader'
+import UsersCards from '../components/user-cart'
+import { useFetch } from '../hooks/useFetch'
 
 const Users = () => {
-    const [{response}, doFetch] = useFetch('/users')
-    console.log(response)
+    const [{ response, isLoading }, doFetch] = useFetch('/users')
+    const { items } = response
+    console.log(items, isLoading)
     useEffect(() => {
         doFetch()
     }, [doFetch])
 
+    if (isLoading || !items) {
+        return <Loader />
+    }
+
     return (
-        <div>USERS</div>
+        <UsersCards items={items} />
     )
 }
 
