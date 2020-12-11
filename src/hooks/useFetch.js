@@ -30,7 +30,6 @@ export const useFetch = (url) => {
 
         Axios(options)
             .then((res) => {
-                console.log(res.data)
                 if (res.data.items) {
                     setResponse(res.data)
                 }
