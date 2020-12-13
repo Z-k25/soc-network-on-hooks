@@ -1,23 +1,22 @@
 import { useCallback, useState } from 'react'
-import {range as getRange} from '../utils/utils'
+import { range as getRange } from '../utils/utils'
 
-export const useRange = (startValue, totalCount, changeValue) => {
-    const [range, setRange] = useState(() => getRange(startValue, startValue + changeValue))
-    const changeRange = useCallback((start) => {
-        if (start + changeValue <= totalCount ) {
-            setRange(() => {
-                const value = getRange(start, start + changeValue)
-                console.log(value)
-                return value
-            })
+export const useRange = (startValue, totalCount, rangeLength) => {
+    const [range, setRange] = useState(() => getRange(startValue, startValue + rangeLength))
+
+    const changeRange = useCallback((newStartValue) => {
+        const endValue = newStartValue + rangeLength
+
+        if (endValue <= totalCount) {
+            setRange(() => getRange(newStartValue, endValue))
         }
-        if (start + changeValue > totalCount) {
-            setRange(() => getRange(totalCount - changeValue, totalCount))        
+        if (endValue > totalCount) {
+            setRange(() => getRange(newStartValue, totalCount))
         }
-        if (start < 1) {
-            setRange(() => getRange(1, 1 + changeValue))
+        if (newStartValue < 1) {
+            setRange(() => getRange(1, 1 + rangeLength))
         }
-    }, [changeValue, totalCount])
+    }, [rangeLength, totalCount])
 
     return [range, changeRange]
 }

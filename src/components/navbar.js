@@ -34,7 +34,7 @@ const Navbar = () => {
                     <li className="nav-item">
                         <NavLink
                             className="nav-link"
-                            to="/users">
+                            to={"/users?count=12&page=1"}>
                             <i className="fa fa-address-card" aria-hidden="true"></i>
                             &nbsp;
                             Users

@@ -1,11 +1,11 @@
 import { withRouter } from "react-router-dom"
 import { useRange } from "../hooks/useRange"
-import { urlParser } from "../utils/utils"
+import { getUsersStartPage } from "../utils/utils"
 
 const Paginator = (props) => {
-    const { totalPagesCount, setCurrentPage, currentPage, location } = props
+    const { totalPagesCount, onCurrentPageChange, currentPage, location } = props
     const stepValue = 7
-    const startPage = urlParser(location.search, 'page')
+    const startPage = getUsersStartPage(location.search, 'page', totalPagesCount)
     const [pages, changePages] = useRange(startPage, totalPagesCount, stepValue)
 
     return (
@@ -15,8 +15,8 @@ const Paginator = (props) => {
                     <button
                         className="page-link"
                         onClick={() => {
-                            changePages(pages[0] - stepValue)
-                            setCurrentPage(pages[0] - stepValue)
+                            changePages(startPage - stepValue - 1)
+                            onCurrentPageChange(startPage - stepValue - 1)
                         }}>
                         Previous
                     </button>
@@ -28,7 +28,7 @@ const Paginator = (props) => {
                             className={currentPage === page ? "page-item active" : "page-item"}
                             aria-current="page"
                             key={page}
-                            onClick={() => { setCurrentPage(page) }}>
+                            onClick={() => onCurrentPageChange(page)}>
                             <span className="page-link">{page}</span>
                         </li>
                     )
@@ -38,8 +38,8 @@ const Paginator = (props) => {
                     <button
                         className="page-link"
                         onClick={() => {
-                            changePages(pages[pages.length - 1])
-                            setCurrentPage(pages[pages.length - 1])
+                            changePages(startPage + stepValue + 1)
+                            onCurrentPageChange(startPage + stepValue + 1, stepValue)
                         }}>
                         Next
                     </button>

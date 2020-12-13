@@ -2,9 +2,14 @@ import './styles/user-cart.css'
 import defaultAvatar from '../images/default-user-ava.jpg'
 import { useContext } from 'react'
 import { UserContext } from '../context/userContext'
+import { Loader } from './common/Loader/Loader'
 const { Link } = require("react-router-dom")
 
-const UsersCards = ({ items }) => {
+const UsersCards = ({ items, isLoading }) => {
+    if (isLoading) {
+        return <Loader />
+    }
+
     return (
         <div className="container">
             <div className="row userMain">
@@ -18,7 +23,7 @@ const UsersCards = ({ items }) => {
 
 const UserCard = ({ item }) => {
     const { name, followed, id, photos, status } = item
-    const [{isLogedOn}] = useContext(UserContext)
+    const [{ isLogedOn }] = useContext(UserContext)
 
     return (
         <div className="col-md-3 col-sm-4">
@@ -28,7 +33,7 @@ const UserCard = ({ item }) => {
                 </div>
                 <div className="userImg">
                     <Link to={`/profile/${id}`}>
-                        <img src={photos.small || photos.small || defaultAvatar} alt="" />
+                        <img src={photos.large || photos.small || defaultAvatar} alt="" />
                     </Link>
                 </div>
                 <div className="userDescription">
@@ -40,9 +45,10 @@ const UserCard = ({ item }) => {
                             <span className="number">137</span>
                             <span>Followers</span>
                         </div> */}
-                    { isLogedOn && (<Link to="">
-                        <button className="btn">{followed ? "Follow" : "Unfollow"}</button>
-                    </Link>)}
+                    {isLogedOn && (
+                        <Link to="">
+                            <button className="btn">{followed ? "Unfollow" : "Follow"}</button>
+                        </Link>)}
                 </div>
             </div>
         </div>
