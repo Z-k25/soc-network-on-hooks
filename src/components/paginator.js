@@ -1,12 +1,16 @@
-import { withRouter } from "react-router-dom"
+import { useEffect } from "react"
 import { useRange } from "../hooks/useRange"
-import { getUsersStartPage } from "../utils/utils"
 
 const Paginator = (props) => {
-    const { totalPagesCount, onCurrentPageChange, currentPage, location } = props
     const stepValue = 7
-    const startPage = getUsersStartPage(location.search, 'page', totalPagesCount)
+    const { totalPagesCount, onCurrentPageChange, currentPage, startPage } = props
     const [pages, changePages] = useRange(startPage, totalPagesCount, stepValue)
+
+    useEffect(() => {
+        if (!pages.includes(startPage)) {
+            changePages(startPage)
+        }
+    }, [changePages, pages, startPage])
 
     return (
         <nav aria-label="...">
@@ -15,7 +19,7 @@ const Paginator = (props) => {
                     <button
                         className="page-link"
                         onClick={() => {
-                            changePages(startPage - stepValue - 1)
+                            changePages(pages[0] -  1)
                             onCurrentPageChange(startPage - stepValue - 1)
                         }}>
                         Previous
@@ -39,7 +43,7 @@ const Paginator = (props) => {
                         className="page-link"
                         onClick={() => {
                             changePages(startPage + stepValue + 1)
-                            onCurrentPageChange(startPage + stepValue + 1, stepValue)
+                            onCurrentPageChange(pages[pages.length - 1] + 1)
                         }}>
                         Next
                     </button>
@@ -49,4 +53,4 @@ const Paginator = (props) => {
     )
 }
 
-export default withRouter(Paginator)
+export default Paginator

@@ -5,7 +5,7 @@ export const useFetch = (url) => {
     const baseUrl = 'https://social-network.samuraijs.com/api/1.0'
     const [response, setResponse] = useState({})
     const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [resultCode, setResultCode] = useState(null)
     const [options, setOptions] = useState({})
 
@@ -39,13 +39,13 @@ export const useFetch = (url) => {
                 if (res.data.resultCode === 0) {
                     setResponse(res.data.data)
                 }
-                setIsLoading(false)
                 setResultCode(res.data.resultCode)
+                setIsLoading(false)
             })
 
             .catch((data) => {
                 console.log(data)
-
+                setError(data)
                 setIsLoading(false)
             })
     }, [options, isLoading])

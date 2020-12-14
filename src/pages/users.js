@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ErrorBoundry } from '../components/common/error-boundry'
 import { Loader } from '../components/common/Loader/Loader'
 import Paginator from '../components/paginator'
 import UsersCards from '../components/user-card'
@@ -10,7 +11,7 @@ const Users = ({ history, location }) => {
     const startPage = urlParser(location.search, 'page')
     const [currentPage, setCurrentPage] = useState(startPage || 1)
     const apiUrl = `/users?count=${pagesCount}&page=${currentPage}`
-    const [{ response, isLoading }, doFetch] = useFetch(apiUrl)
+    const [{ response, error, isLoading }, doFetch] = useFetch(apiUrl)
     const { items, totalCount } = response
     const totalPagesCount = Math.ceil(totalCount / pagesCount)
 
@@ -24,10 +25,9 @@ const Users = ({ history, location }) => {
         return setCurrentPage(page)
     }
 
-
     useEffect(() => {
         doFetch()
-    }, [doFetch, currentPage])
+    }, [doFetch, startPage])
 
     useEffect(() => {
         if (currentPage >= 1 && currentPage <= totalPagesCount) {
@@ -35,17 +35,24 @@ const Users = ({ history, location }) => {
         }
     }, [currentPage, apiUrl, history, totalPagesCount])
 
-    if (!items) {
+    if (!items && !error) {
         return <Loader />
+    }
+
+    if (error) {
+        return <ErrorBoundry />
     }
 
     return (
         <div className="my-4">
             <Paginator
+                startPage={startPage}
                 totalPagesCount={totalPagesCount}
                 currentPage={currentPage}
                 onCurrentPageChange={onCurrentPageChange} />
-            <UsersCards items={items} isLoading={isLoading} />
+            <UsersCards 
+                items={items} 
+                isLoading={isLoading} />
         </div>
     )
 }
