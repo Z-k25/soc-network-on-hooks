@@ -15,7 +15,6 @@ export const UserContextProvider = ({ children }) => {
         doFetch()
     }, [doFetch])
 
-
     useEffect(() => {
         if (startAuth) {
             doFetch()

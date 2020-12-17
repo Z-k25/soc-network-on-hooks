@@ -3,9 +3,10 @@ import { useCallback, useEffect, useState } from "react"
 
 export const useFetch = (url) => {
     const baseUrl = 'https://social-network.samuraijs.com/api/1.0'
-    const [response, setResponse] = useState({})
+    const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isFetching, setIsFetching] = useState(false)
     const [resultCode, setResultCode] = useState(null)
     const [options, setOptions] = useState({})
 
@@ -20,35 +21,43 @@ export const useFetch = (url) => {
             ...options
         }
         setOptions({ ...requestedOptions })
-        setIsLoading(true)
+        setIsFetching(true)
     }, [url])
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isFetching) {
             return
         }
 
         Axios(options)
             .then((res) => {
+                if (res.data.userId) {
+                    setResponse(res.data)
+                }
                 if (res.data.items) {
                     setResponse(res.data)
                 }
                 if (res.data.resultCode === 1) {
                     setError(res.data.messages)
+                    setResultCode(res.data.resultCode)
                 }
                 if (res.data.resultCode === 0) {
                     setResponse(res.data.data)
+                    setResultCode(res.data.resultCode)
                 }
-                setResultCode(res.data.resultCode)
+                if (res.data && typeof res.data === 'string') {
+                    setResponse(res.data)
+                }
+                setIsFetching(false)
                 setIsLoading(false)
             })
 
             .catch((data) => {
-                console.log(data)
                 setError(data)
+                setIsFetching(false)
                 setIsLoading(false)
             })
-    }, [options, isLoading])
+    }, [options, isFetching])
 
     return [{ response, error, isLoading, resultCode }, doFetch]
 

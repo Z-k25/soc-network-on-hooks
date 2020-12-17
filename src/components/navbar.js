@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { UserContext } from '../context/userContext'
 
 const Navbar = () => {
-    const [{ isLogedOn, isLoading }] = useContext(UserContext)
+    const [{ isLogedOn, isLoading, id }] = useContext(UserContext)
 
     return (
         <nav className="col-lg-2">
@@ -14,7 +14,7 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <NavLink
                                     className="nav-link"
-                                    to="/">
+                                    to={`/profile/${id}`}>
                                     <i className="fa fa-user-circle" aria-hidden="true"></i>
                                     &nbsp;
                                     My profile

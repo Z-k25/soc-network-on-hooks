@@ -2,15 +2,14 @@ import { useEffect } from "react"
 import { useRange } from "../hooks/useRange"
 
 const Paginator = (props) => {
-    const stepValue = 7
-    const { totalPagesCount, onCurrentPageChange, currentPage, startPage } = props
-    const [pages, changePages] = useRange(startPage, totalPagesCount, stepValue)
+    const { totalPagesCount, onCurrentPageChange, currentPage, rangeLength } = props
+    const [pages, changePages] = useRange(currentPage, totalPagesCount, rangeLength)
 
     useEffect(() => {
-        if (!pages.includes(startPage)) {
-            changePages(startPage)
+        if (!pages.includes(currentPage)) {
+            onCurrentPageChange(pages[0])
         }
-    }, [changePages, pages, startPage])
+    }, [currentPage, onCurrentPageChange, pages])
 
     return (
         <nav aria-label="...">
@@ -19,8 +18,7 @@ const Paginator = (props) => {
                     <button
                         className="page-link"
                         onClick={() => {
-                            changePages(pages[0] -  1)
-                            onCurrentPageChange(startPage - stepValue - 1)
+                            changePages(pages[0] - rangeLength - 1)
                         }}>
                         Previous
                     </button>
@@ -42,8 +40,7 @@ const Paginator = (props) => {
                     <button
                         className="page-link"
                         onClick={() => {
-                            changePages(startPage + stepValue + 1)
-                            onCurrentPageChange(pages[pages.length - 1] + 1)
+                            changePages(pages[pages.length - 1] + 1)
                         }}>
                         Next
                     </button>

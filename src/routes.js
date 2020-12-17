@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch } from 'react-router-dom'
 import Users from './pages/users'
 import Profile from './pages/profile'
 import SignForm from './components/sign-form'
-import {Loader} from './components/common/Loader/Loader'
+import { Loader } from './components/common/Loader/Loader'
 import { UserContext } from './context/userContext'
 
 const Routes = () => {
-    const [{isLoading}] = useContext(UserContext)
+    const [{ isLoading, id }] = useContext(UserContext)
 
     if (isLoading) {
         return (
@@ -19,8 +19,9 @@ const Routes = () => {
     return (
         <div className="col-lg-10 routes" >
             <Switch>
-                <Route path="/" component={Profile} exact />
-                <Route path="/profile/:id?" component={Profile} />
+                <Route path="/" render={() => <Redirect to={`/profile/${id}`} />} exact />
+                <Route path="/profile" render={() => <Redirect to={`/profile/${id}`} />} exact />
+                <Route path="/profile/:id" component={Profile} />
                 <Route path="/users/" component={Users} />
                 <Route path="/login" component={SignForm} />
                 <Route path="/register" component={SignForm} />

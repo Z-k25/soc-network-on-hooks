@@ -8,6 +8,7 @@ import { urlParser } from '../utils/utils'
 
 const Users = ({ history, location }) => {
     const pagesCount = 12
+    const rangeLength = 7
     const startPage = urlParser(location.search, 'page')
     const [currentPage, setCurrentPage] = useState(startPage || 1)
     const apiUrl = `/users?count=${pagesCount}&page=${currentPage}`
@@ -35,7 +36,7 @@ const Users = ({ history, location }) => {
         }
     }, [currentPage, apiUrl, history, totalPagesCount])
 
-    if (!items && !error) {
+    if (isLoading) {
         return <Loader />
     }
 
@@ -46,12 +47,12 @@ const Users = ({ history, location }) => {
     return (
         <div className="my-4">
             <Paginator
-                startPage={startPage}
+                rangeLength={rangeLength}
                 totalPagesCount={totalPagesCount}
                 currentPage={currentPage}
                 onCurrentPageChange={onCurrentPageChange} />
-            <UsersCards 
-                items={items} 
+            <UsersCards
+                items={items}
                 isLoading={isLoading} />
         </div>
     )
