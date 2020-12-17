@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 
 export const useFetch = (url) => {
     const baseUrl = 'https://social-network.samuraijs.com/api/1.0'
-    const [response, setResponse] = useState(null)
+    const [response, setResponse] = useState({})
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [isFetching, setIsFetching] = useState(false)
@@ -46,7 +46,7 @@ export const useFetch = (url) => {
                     setResultCode(res.data.resultCode)
                 }
                 if (res.data && typeof res.data === 'string') {
-                    setResponse(res.data)
+                    setResponse({status: res.data})
                 }
                 setIsFetching(false)
                 setIsLoading(false)
