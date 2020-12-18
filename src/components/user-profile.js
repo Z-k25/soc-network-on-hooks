@@ -1,23 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import './styles/user-profile.css'
 import defaultPhoto from '../images/default-user-ava.jpg'
-import { useFetch } from '../hooks/useFetch'
 import { UserContext } from '../context/userContext'
 import { Link } from 'react-router-dom'
+import UserStatus from './user-status'
 
 export const UserProfile = (props) => {
     const {
         aboutMe, contacts, fullName, lookingForAJob,
         lookingForAJobDescription, photos, userId } = props
     const { facebook, website, vk, twitter, instagram, youtube, github } = contacts
-
-    const apiUrlStatus = `/profile/status/${userId}`
     const [authData] = useContext(UserContext)
-    const [{ response }, doFetch] = useFetch(apiUrlStatus)
-
-    useEffect(() => {
-        doFetch()
-    }, [doFetch])
 
     return (
         <div className="container emp-profile">
@@ -37,9 +30,7 @@ export const UserProfile = (props) => {
                             <h5>
                                 {fullName}
                             </h5>
-                            <h6>
-                                {response.status}
-                            </h6>
+                            <UserStatus userId={userId}/>
                             {aboutMe && (
                                 <p className="proile-rating">About me : <span>{aboutMe}</span></p>
                             )}
@@ -92,7 +83,7 @@ export const UserProfile = (props) => {
                                 {lookingForAJob && (
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <label>Description</label>
+                                            <label>Job description</label>
                                         </div>
                                         <div className="col-md-6">
                                             <p>{lookingForAJobDescription}</p>

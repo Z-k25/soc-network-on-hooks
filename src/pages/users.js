@@ -36,7 +36,7 @@ const Users = ({ history, location }) => {
         }
     }, [currentPage, apiUrl, history, totalPagesCount])
 
-    if (isLoading) {
+    if (isLoading && !items) {
         return <Loader />
     }
 

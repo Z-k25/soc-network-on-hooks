@@ -22,6 +22,7 @@ export const useFetch = (url) => {
         }
         setOptions({ ...requestedOptions })
         setIsFetching(true)
+        setIsLoading(true)
     }, [url])
 
     useEffect(() => {

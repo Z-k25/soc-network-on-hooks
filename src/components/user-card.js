@@ -7,6 +7,7 @@ const { Link } = require("react-router-dom")
 
 const UsersCards = ({ items, isLoading }) => {
     if (isLoading) {
+        console.log(isLoading)
         return <Loader />
     }
 
