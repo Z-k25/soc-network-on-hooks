@@ -5,11 +5,15 @@ const { UserContext } = require("../context/userContext")
 
 const withAuthRedirect = Component => (props) => {
     const [{ isLogedOn }] = useContext(UserContext)
-    console.log(props)
+    const {location} = props
+
     if (!isLogedOn) {
-        return <Redirect to="/login" />
+        return <Redirect to={{
+            pathname: "/login",
+            state: { beforePage: location.pathname }
+        }} />
     }
 
-    return <Component {...props}/>
+    return <Component {...props} />
 }
 export default withAuthRedirect

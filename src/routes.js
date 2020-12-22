@@ -5,10 +5,19 @@ import Profile from './pages/profile'
 import SignForm from './components/sign-form'
 import { Loader } from './components/common/Loader/Loader'
 import { UserContext } from './context/userContext'
+import Messages from './pages/messages'
 
-const Routes = (props) => {
-    const [{ isLoading, id }] = useContext(UserContext)
-    console.log(props)
+const Routes = () => {
+    const [{ isLoading, id, isLogedOn }] = useContext(UserContext)
+
+    const profileRender = () => {
+        if (isLogedOn) {
+            return <Redirect to={`/profile/${id}`} />
+        }
+        if (!isLogedOn) {
+            return <Redirect to="/login" />
+        }
+    }
 
     if (isLoading) {
         return (
@@ -20,12 +29,13 @@ const Routes = (props) => {
     return (
         <div className="col-lg-10 routes" >
             <Switch>
-                <Route path="/" render={() => <Redirect to={`/profile/${id}`} />} exact />
-                <Route path="/profile" render={() => <Redirect to={`/profile/${id}`} />} exact />
+                <Route path="/" render={profileRender} exact />
+                <Route path="/profile" render={profileRender} exact />
                 <Route path="/profile/:id" component={Profile} />
+                <Route path="/messages/" component={Messages} />
                 <Route path="/users/" component={Users} />
                 <Route path="/login" component={SignForm} />
-                <Route path="/register" component={SignForm} />
+                <Route path="/register" component={SignForm} /> 
             </Switch>
         </div>
     )
