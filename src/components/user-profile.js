@@ -30,7 +30,9 @@ export const UserProfile = (props) => {
                             <h5>
                                 {fullName}
                             </h5>
-                            <UserStatus userId={userId}/>
+                            <UserStatus 
+                                userId={userId}
+                                currentUserId={authData.id}/>
                             {aboutMe && (
                                 <p className="proile-rating">About me : <span>{aboutMe}</span></p>
                             )}

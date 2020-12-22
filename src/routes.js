@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
 import Users from './pages/users'
 import Profile from './pages/profile'
 import SignForm from './components/sign-form'
 import { Loader } from './components/common/Loader/Loader'
 import { UserContext } from './context/userContext'
 
-const Routes = () => {
+const Routes = (props) => {
     const [{ isLoading, id }] = useContext(UserContext)
+    console.log(props)
 
     if (isLoading) {
         return (
@@ -30,4 +31,4 @@ const Routes = () => {
     )
 }
 
-export default Routes
+export default withRouter(Routes)

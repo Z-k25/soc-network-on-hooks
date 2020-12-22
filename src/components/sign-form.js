@@ -4,13 +4,14 @@ import '../components/styles/log-form.css'
 import { UserContext } from '../context/userContext'
 import { useFetch } from '../hooks/useFetch'
 
-const SignForm = () => {
+const SignForm = ({location, history}) => {
     const apiUrl = '/auth/login'
-    const [{ resultCode, isLoading }, doFetch] = useFetch(apiUrl)
+    const [{ resultCode, /* isLoading */ }, doFetch] = useFetch(apiUrl)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
     const [{ isLogedOn, id }, setStartAuth] = useContext(UserContext)
+    console.log(location, history)
 
     useEffect(() => {
         if (resultCode === 0) {
@@ -79,7 +80,7 @@ const SignForm = () => {
                                 <button
                                     className="btn btn-lg btn-primary btn-block text-uppercase"
                                     type="submit"
-                                    disabled={isLoading}>
+                                    /* disabled={isLoading} */>
                                     Sign in
                                 </button>
                             </form>

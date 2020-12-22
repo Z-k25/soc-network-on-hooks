@@ -5,7 +5,7 @@ const { UserContext } = require("../context/userContext")
 
 const withAuthRedirect = Component => (props) => {
     const [{ isLogedOn }] = useContext(UserContext)
-
+    console.log(props)
     if (!isLogedOn) {
         return <Redirect to="/login" />
     }
