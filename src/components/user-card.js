@@ -3,6 +3,7 @@ import defaultAvatar from '../images/default-user-ava.jpg'
 import { useContext } from 'react'
 import { UserContext } from '../context/userContext'
 import { Loader } from './common/Loader/Loader'
+import useFollow from '../hooks/useFollow'
 const { Link } = require("react-router-dom")
 
 const UsersCards = ({ items, isLoading }) => {
@@ -24,6 +25,16 @@ const UsersCards = ({ items, isLoading }) => {
 const UserCard = ({ item }) => {
     const { name, followed, id, photos, status } = item
     const [{ isLogedOn }] = useContext(UserContext)
+    const [{isFollowed, isFetching}, makeRequest] = useFollow(id, followed)
+
+    const onClick = () => {
+        if (isFollowed) {
+            makeRequest("unfollow")
+        }
+        if (!isFollowed) {
+            makeRequest("follow")
+        }
+    }
 
     return (
         <div className="col-md-3 col-sm-4">
@@ -46,9 +57,12 @@ const UserCard = ({ item }) => {
                             <span>Followers</span>
                         </div> */}
                     {isLogedOn && (
-                        <Link to="">
-                            <button className="btn">{followed ? "Unfollow" : "Follow"}</button>
-                        </Link>)}
+                        <button
+                            className="btn"
+                            onClick={onClick}
+                            disabled={isFetching}>{isFollowed ? "Unfollow" : "Follow"}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
